@@ -31,13 +31,12 @@ echo
 echo -e "${IBlue}Found ${UYellow}${COMMITS_NB}${IBlue} commit(s) to check ...${Color_Off}"
 echo
 
+# Create temporary file for pretty output through column binary
 TMP_LOGS=$(mktemp)
-#echo -e "🟢 ${Green}Valid${Color_Off} | 🟠 ${Yellow}Ignored${Color_Off} | 🔴 ${Red}Invalid${Color_Off}"
-#echo
-
 ERROR='false'
 
-echo -e "${Cyan}SHA${Color_Off} \t Verdict \t ${Green}Author${Color_Off} \t ${Yellow}Message${Color_Off}" >> ${TMP_LOGS}
+# Table Header
+echo -e "${Cyan}SHA${Color_Off}\t${Purple}Verdict${Color_Off}\t${Green}Author${Color_Off}\t${Yellow}Message${Color_Off}" >> ${TMP_LOGS}
 
 # Iterate over each Commit
 for commit in $(echo "${COMMITS}" | jq -r '.[] | @base64'); do
@@ -55,12 +54,14 @@ for commit in $(echo "${COMMITS}" | jq -r '.[] | @base64'); do
         ERROR='true'
     fi
 
-    echo -e "${Cyan}${sha_short}${Color_Off} \t ${check_result} \t ${Green}${author}${Color_Off} \t ${Yellow}${message}${Color_Off}" >> ${TMP_LOGS}
+    echo -e "${Cyan}${sha_short}${Color_Off}\t${check_result}\t${Green}${author}${Color_Off}\t${Yellow}${message}${Color_Off}" >> ${TMP_LOGS}
 done
 
 cat ${TMP_LOGS} | column -t
 
+echo
 echo -e "    🟢 ${Green}Valid${Color_Off} | 🟠 ${Yellow}Ignored${Color_Off} | 🔴 ${Red}Invalid${Color_Off}" 
+echo
 
 if [[ "${ERROR}" == "true" ]]; then
     echo "::error::At least one commit is not respecting commit convention."
