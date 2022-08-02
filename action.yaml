@@ -16,10 +16,10 @@ runs:
         fi
 
         curl --request GET \
-          --url ${COMMITS_API} \
           --header 'authorization: Bearer ${{ env.GITHUB_TOKEN }}' \
           --header 'content-type: application/json' \
-          --fail | jq
+          --fail \
+          ${COMMITS_API} | jq
 
         #gh pr -R octocat/Hello-World view 2279 --json commits
       env:
