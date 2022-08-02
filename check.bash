@@ -10,24 +10,25 @@ check_conventions() {
 
     if [[ "${author}" == 'dependabot[bot]' ]]; then
         echo "🟠"
-        continue
+        return
     fi
 
     if echo "${message}" | grep -E -q "^Merge"; then
         echo "🟠"
-        continue
+        return
     fi
 
     if echo "${message}" | grep -E -q "^workflows((\(\w+( \w+)*\)))?\:.+ ?$"; then
         echo "🟠"
-        continue
+        return
     fi
 
     if echo "${message}" | grep -v -E -q "${REGEX}"; then
         echo "🔴"
-        continue
+        return
     fi
 
     echo "🟢"
+    return
 }
 
