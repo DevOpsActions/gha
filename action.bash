@@ -15,7 +15,7 @@ COMMITS=$(curl --request GET                                 \
     --header 'content-type: application/json'                \
     --silent                                                 \
     --fail                                                   \
-    ${COMMITS_API_URL})
+    ${COMMITS_API_URL} | jq)
 
 echo "${COMMITS}"
 
