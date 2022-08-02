@@ -55,9 +55,9 @@ for commit in $(echo "${COMMITS}" | jq -r '.[] | @base64'); do
 
     if [[ "${check_result}" == "🟢" ]]; then
         ((valid=valid+1))
-    elif [[ "${check_result}" != "🟠"]]
+    elif [[ "${check_result}" != "🟠"]]; then
         ((ignored=ignored+1))
-    elif [[ "${check_result}" != "🔴"]]
+    elif [[ "${check_result}" != "🔴"]]; then
         ((errors=errors+1))
     fi
 
