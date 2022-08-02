@@ -11,6 +11,8 @@ errors=0
 ignored=0
 valid=0
 
+echo
+
 # Table Header
 echo -e "${UGreen}Author${Color_Off}\t${UYellow}Title${Color_Off}\t${UPurple}Verdict${Color_Off}" >> ${TMP_LOGS}
 
