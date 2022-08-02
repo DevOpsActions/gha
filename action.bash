@@ -53,7 +53,7 @@ for commit in $(echo "${COMMITS}" | jq -r '.[] | @base64'); do
         ERROR='true'
     fi
 
-    echo -e "${Cyan}${sha_short}${Color_Off} $'\t' ${check_result} $'\t' ${Green}${author}${Color_Off} $'\t' ${Yellow}${message}${Color_Off}" >> ${TMP_LOGS}
+    echo -e "${Cyan}${sha_short}${Color_Off} \t ${check_result} \t ${Green}${author}${Color_Off} \t ${Yellow}${message}${Color_Off}" >> ${TMP_LOGS}
 done
 
 cat ${TMP_LOGS} | column -t
