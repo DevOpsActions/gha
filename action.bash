@@ -25,13 +25,15 @@ COMMITS=$(curl --request GET                           \
 # Count them
 COMMITS_NB=$(echo "${COMMITS}" | jq '. | length')
 
-echo "${Yellow}Found ${Cyan}${COMMITS_NB}${Yellow} Commits to check ...${Color_Off}"
+echo -e "${Yellow}Found ${Cyan}${COMMITS_NB}${Yellow} Commits to check ...${Color_Off}"
 
+i=0
 # Iterate over each Commit
 for commit in $(echo "${COMMITS}" | jq -r '.[] | @base64'); do
     _jq() {
         echo "${commit}" | base64 --decode | jq -r ${1}
     }
+    i++
 
-    echo "Commit message is: $(_jq '.commit.message')"
+    echo -e "[#${i}] ${Yellow}$(_jq '.commit.message')${Color_Off}"
 done
