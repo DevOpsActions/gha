@@ -5,7 +5,7 @@ source ${GHA_PATH}/check.bash
 
 # Extracting Commits API URL from current context
 PR_TITLE=$(echo "${GITHUB_CONTEXT:?}" | jq .event.pull_request.title -r)
-AUTHOR=$(echo "${GITHUB_CONTEXT:?}" | jq .actor)
+AUTHOR=$(echo "${GITHUB_CONTEXT:?}" | jq .actor -r)
 
 # Create temporary file for pretty output through column binary
 TMP_LOGS=$(mktemp)
