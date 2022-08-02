@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -x
+
 # Extracting Commits API URL from current context
 COMMITS_API_URL=$(echo "${GITHUB_CONTEXT:?}" | jq .event.pull_request._links.commits.href -r)
 
