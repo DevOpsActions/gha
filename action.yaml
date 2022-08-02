@@ -17,7 +17,7 @@ runs:
 
         curl --request GET \
           --url ${COMMITS_API} \
-          --header 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
+          --header 'authorization: Bearer ${{ env.GITHUB_TOKEN }}' \
           --header 'content-type: application/json' \
           --fail | jq
 
