@@ -3,6 +3,7 @@
 # Extracting Commits API URL from current context
 PR_TITLE=$(echo "${GITHUB_CONTEXT:?}" | jq .event.pull_request.title -r)
 AUTHOR=$(echo "${GITHUB_CONTEXT:?}" | jq .actor -r)
+PR_ID=$(echo "${GITHUB_CONTEXT:?}" | jq .event.pull_request -r)
 
 # Create temporary file for pretty output through column binary
 TMP_LOGS=$(mktemp)
@@ -14,7 +15,7 @@ valid=0
 echo
 
 # Table Header
-echo -e "${UGreen}Author${Color_Off}\t${UYellow}Title${Color_Off}\t${UPurple}Verdict${Color_Off}" >> ${TMP_LOGS}
+echo -e "${UCyan}ID${Color_Off}\t${UGreen}Author${Color_Off}\t${UYellow}Title${Color_Off}\t${UPurple}Verdict${Color_Off}" >> ${TMP_LOGS}
 
 check_result=$(check_pr_naming_conventions "${AUTHOR}" "${PR_TITLE}")
 
@@ -26,7 +27,7 @@ elif [[ "${check_result}" == "🔴" ]]; then
     ((errors=errors+1))
 fi
 
-echo -e "${Green}${AUTHOR}${Color_Off}\t${Yellow}${PR_TITLE}${Color_Off}\t  ${check_result}" >> ${TMP_LOGS}
+echo -e "${Cyan}${PR_ID}\t${Green}${AUTHOR}${Color_Off}\t${Yellow}${PR_TITLE}${Color_Off}\t  ${check_result}" >> ${TMP_LOGS}
 
 cat ${TMP_LOGS} | column -ts $'\t' && \
 rm ${TMP_LOGS}
