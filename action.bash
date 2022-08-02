@@ -57,7 +57,7 @@ for commit in $(echo "${COMMITS}" | jq -r '.[] | @base64'); do
     echo -e "${Cyan}${sha_short}${Color_Off}\t${check_result}\t${Green}${author}${Color_Off}\t${Yellow}${message}${Color_Off}" >> ${TMP_LOGS}
 done
 
-cat ${TMP_LOGS} | column -t
+cat ${TMP_LOGS} | column -ts $'\t'
 
 echo
 echo -e "    🟢 ${Green}Valid${Color_Off} | 🟠 ${Yellow}Ignored${Color_Off} | 🔴 ${Red}Invalid${Color_Off}" 
