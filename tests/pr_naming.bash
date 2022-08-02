@@ -3,7 +3,7 @@
 # Extracting Commits API URL from current context
 PR_TITLE=$(echo "${GITHUB_CONTEXT:?}" | jq .event.pull_request.title -r)
 AUTHOR=$(echo "${GITHUB_CONTEXT:?}" | jq .actor -r)
-PR_ID=$(echo "${GITHUB_CONTEXT:?}" | jq .event.pull_request -r)
+PR_ID=$(echo "${GITHUB_CONTEXT:?}" | jq .event.pull_request.number -r)
 
 # Create temporary file for pretty output through column binary
 TMP_LOGS=$(mktemp)
@@ -27,7 +27,7 @@ elif [[ "${check_result}" == "🔴" ]]; then
     ((errors=errors+1))
 fi
 
-echo -e "${Cyan}${PR_ID}\t${Green}${AUTHOR}${Color_Off}\t${Yellow}${PR_TITLE}${Color_Off}\t  ${check_result}" >> ${TMP_LOGS}
+echo -e "${Cyan}#${PR_ID}\t${Green}${AUTHOR}${Color_Off}\t${Yellow}${PR_TITLE}${Color_Off}\t  ${check_result}" >> ${TMP_LOGS}
 
 cat ${TMP_LOGS} | column -ts $'\t' && \
 rm ${TMP_LOGS}
