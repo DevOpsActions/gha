@@ -15,7 +15,7 @@ runs:
           exit 1
         fi
 
-        gh -x 'GET' ${COMMITS_API} | jq
+        gh api -x 'GET' ${COMMITS_API} | jq
 
         #gh pr -R octocat/Hello-World view 2279 --json commits
       env:
