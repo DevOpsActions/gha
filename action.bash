@@ -46,5 +46,5 @@ for commit in $(echo "${COMMITS}" | jq -r '.[] | @base64'); do
     author=$(_jq '.commit.author')
     message=$(_jq '.commit.message')
 
-    echo -e "${Cyan}#${i} | ${Yellow}${message}${Color_Off}"
+    echo -e "${Cyan}#${i} | ${Green}${author} » ${Yellow}${message}${Color_Off}"
 done
