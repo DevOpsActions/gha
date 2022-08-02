@@ -37,6 +37,8 @@ TMP_LOGS=$(mktemp)
 
 ERROR='false'
 
+echo -e "${Cyan}SHA${Color_Off} \t Verdict \t ${Green}Author${Color_Off} \t ${Yellow}Message${Color_Off}" >> ${TMP_LOGS}
+
 # Iterate over each Commit
 for commit in $(echo "${COMMITS}" | jq -r '.[] | @base64'); do
     _jq() {
