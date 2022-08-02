@@ -27,10 +27,13 @@ COMMITS=$(curl --request GET                           \
 # Count them
 COMMITS_NB=$(echo "${COMMITS}" | jq '. | length')
 
+echo
 echo -e "${IBlue}Found ${UYellow}${COMMITS_NB}${IBlue} commit(s) to check ...${Color_Off}"
 echo
-echo -e "🟢 ${Green}Valid${Color_Off} | 🟠 ${Yellow}Ignored${Color_Off} | 🔴 ${Red}Invalid${Color_Off}"
-echo
+
+TMP_LOGS=$(mktemp)
+#echo -e "🟢 ${Green}Valid${Color_Off} | 🟠 ${Yellow}Ignored${Color_Off} | 🔴 ${Red}Invalid${Color_Off}"
+#echo
 
 ERROR='false'
 
@@ -50,8 +53,10 @@ for commit in $(echo "${COMMITS}" | jq -r '.[] | @base64'); do
         ERROR='true'
     fi
 
-    echo -e " » ${Cyan}${sha_short}${Color_Off} | ${check_result} | ${Green}${author}${Color_Off} | ${Yellow}${message}${Color_Off}"
+    echo -e "${Cyan}${sha_short}${Color_Off} $'\t' ${check_result} $'\t' ${Green}${author}${Color_Off} $'\t' ${Yellow}${message}${Color_Off}" >> ${TMP_LOGS}
 done
+
+cat ${TMP_LOGS} | column -t
 
 if [[ "${ERROR}" == "true" ]]; then
     echo "::error::At least one commit is not respecting commit convention."
