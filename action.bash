@@ -39,7 +39,7 @@ ignored=0
 valid=0
 
 # Table Header
-echo -e "${Cyan}SHA${Color_Off}\t${Purple}Verdict${Color_Off}\t${Green}Author${Color_Off}\t${Yellow}Message${Color_Off}" >> ${TMP_LOGS}
+echo -e "${UCyan}SHA${Color_Off}\t${UPurple}Verdict${Color_Off}\t${UGreen}Author${Color_Off}\t${UYellow}Message${Color_Off}" >> ${TMP_LOGS}
 
 # Iterate over each Commit
 for commit in $(echo "${COMMITS}" | jq -r '.[] | @base64'); do
