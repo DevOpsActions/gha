@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 
+GHA_PATH=$(echo "${GITHUB_CONTEXT:?}" | jq .action_path -r)
+
 # Import colors
-. ./colors.bash
+. ${GHA_PATH}/colors.bash
 
 # Extracting Commits API URL from current context
 COMMITS_API_URL=$(echo "${GITHUB_CONTEXT:?}" | jq .event.pull_request._links.commits.href -r)
