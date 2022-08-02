@@ -43,8 +43,10 @@ for commit in $(echo "${COMMITS}" | jq -r '.[] | @base64'); do
 
     ((i=i+1))
 
-    author=$(_jq '.commit.author')
+    author=$(_jq '.commit.author.name')
     message=$(_jq '.commit.message')
+    sha_long=$(_jq '.parents[0].sha')
+    sha_short=${sha_long:0:7}
 
-    echo -e "${Cyan}#${i} | ${Green}${author} » ${Yellow}${message}${Color_Off}"
+    echo -e "» ${Cyan}${sha_short}${Color_Off} | ${Green}${author}${Color_Off} » ${Yellow}${message}${Color_Off}"
 done
