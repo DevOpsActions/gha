@@ -43,7 +43,7 @@ for commit in $(echo "${COMMITS}" | jq -r '.[] | @base64'); do
     echo ${commit} | base64 --decode | jq
     author=$(_jq '.commit.author.name')
     message=$(_jq '.commit.message')
-    sha_long=$(_jq '.parents[0].sha')
+    sha_long=$(_jq '.sha')
     sha_short=${sha_long:0:7}
     check_result=$(check_commit_conventions "${author}" "${message}")
 
