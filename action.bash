@@ -4,7 +4,7 @@
 GHA_PATH=$(echo "${GITHUB_CONTEXT:?}" | jq .action_path -r)
 
 # Import colors & functions
-. ${GHA_PATH}/utils/colors.bash
+source ${GHA_PATH}/utils/colors.bash
 source ${GHA_PATH}/utils/check.bash
 
 ACTION=${1:?}
