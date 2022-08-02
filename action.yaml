@@ -21,14 +21,12 @@ runs:
           --fail \
           ${COMMITS_API} | jq)
 
-        echo "${COMMITS}"
-
         for commit in $(echo "${COMMITS}" | jq -r '.[] | @base64'); do
           _jq() {
             echo "${commit}" | base64 --decode | jq -r ${1}
           }
 
-          echo "Commit message is: $(_jq '.message')"
+          echo "Commit message is: $(_jq '.commit.message')"
 
         done
       env:
