@@ -40,7 +40,7 @@ for commit in $(echo "${COMMITS}" | jq -r '.[] | @base64'); do
         echo "${commit}" | base64 --decode | jq -r ${1}
     }
 
-    author=$(_jq '.commit.author.name')
+    author=$(_jq '.committer.login')
     message=$(_jq '.commit.message')
     sha_long=$(_jq '.sha')
     sha_short=${sha_long:0:7}
