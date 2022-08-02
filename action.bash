@@ -1,14 +1,11 @@
 #!/usr/bin/env bash
 
-# Configuration zone
-REGEX='^(Revert ")?(feat|fix|chore|docs|refactor|test|dependencies)((\(\w+( \w+)*\)))?\:.+ \([A-Z]{1,10}-[0-9]{1,5}\)"?$'
-# - Do not edit below this point
-
 # Path of the gha on the filesystem
 GHA_PATH=$(echo "${GITHUB_CONTEXT:?}" | jq .action_path -r)
 
-# Import colors
+# Import colors & functions
 . ${GHA_PATH}/colors.bash
+source ${GHA_PATH}/check.bash
 
 # Extracting Commits API URL from current context
 COMMITS_API_URL=$(echo "${GITHUB_CONTEXT:?}" | jq .event.pull_request._links.commits.href -r)
@@ -48,5 +45,7 @@ for commit in $(echo "${COMMITS}" | jq -r '.[] | @base64'); do
     sha_long=$(_jq '.parents[0].sha')
     sha_short=${sha_long:0:7}
 
-    echo -e "» ${Cyan}${sha_short}${Color_Off} | ${Green}${author}${Color_Off} » ${Yellow}${message}${Color_Off}"
+    check_result=$(check_conventions "${author}" "${message}")
+
+    echo -e " » ${Cyan}${sha_short}${Color_Off} | ${check_result} | ${Green}${author}${Color_Off} | ${Yellow}${message}${Color_Off}"
 done
