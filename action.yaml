@@ -5,7 +5,13 @@ runs:
   using: 'composite'
   steps:
     - shell: bash
-      run: ${{ github.action_path }}/action.bash
+      run: ${{ github.action_path }}/action.bash commits
+      env:
+        GITHUB_CONTEXT: ${{ toJSON(github) }}
+        GITHUB_TOKEN: ${{ github.token }}
+
+    - shell: bash
+      run: ${{ github.action_path }}/action.bash pr_naming
       env:
         GITHUB_CONTEXT: ${{ toJSON(github) }}
         GITHUB_TOKEN: ${{ github.token }}
