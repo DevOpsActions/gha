@@ -1,0 +1,11 @@
+name: '📑 Check Conventional Commits'
+description: 'Checks commit messages and validates Conventional Commits'
+
+runs:
+  using: 'composite'
+  steps:
+    - shell: bash
+      run: |
+        env
+      env:
+        GITHUB_CONTEXT: ${{ toJSON(github) }}
