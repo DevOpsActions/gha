@@ -6,6 +6,16 @@ runs:
   steps:
     - shell: bash
       run: |
-        env
+        COMMITS_API=$(echo "${GITHUB_CONTEXT}" | jq .event.pull_request._links.commits)
+
+        if [[ "${COMMITS_API}" != "" ]]; then
+          echo "Commits API : ${COMMITS_API}"
+        else
+          echo "::error:Could not find commits api url from context"
+          exit 1
+        fi
+
+        #gh pr -R octocat/Hello-World view 2279 --json commits
       env:
         GITHUB_CONTEXT: ${{ toJSON(github) }}
+        GITHUB_TOKEN: ${{ github.token }}
