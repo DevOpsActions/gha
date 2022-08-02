@@ -60,6 +60,8 @@ done
 
 cat ${TMP_LOGS} | column -t
 
+echo -e "    🟢 ${Green}Valid${Color_Off} | 🟠 ${Yellow}Ignored${Color_Off} | 🔴 ${Red}Invalid${Color_Off}" 
+
 if [[ "${ERROR}" == "true" ]]; then
     echo "::error::At least one commit is not respecting commit convention."
     exit 1
