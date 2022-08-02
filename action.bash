@@ -4,8 +4,8 @@
 COMMITS_API_URL=$(echo "${GITHUB_CONTEXT}" | jq .event.pull_request._links.commits.href -r)
 
 # Check if an error occured during Commits API URL extraction
-if [[ "${COMMITS_API}" == "null" ]]; then
-    echo "::error:Could not find commits api url from context"
+if [[ "${COMMITS_API_URL}" == "null" ]]; then
+    echo "::error:Could not determine GitHub Action Context ..."
     exit 1
 fi
 
@@ -15,7 +15,7 @@ COMMITS=$(curl --request GET                                 \
     --header 'content-type: application/json'                \
     --silent                                                 \
     --fail                                                   \
-    ${COMMITS_API})
+    ${COMMITS_API_URL})
 
 # Count them
 COMMITS_NB=$(echo "${COMMITS}" | jq '. | length')
