@@ -5,30 +5,7 @@ runs:
   using: 'composite'
   steps:
     - shell: bash
-      run: |
-        COMMITS_API=$(echo "${GITHUB_CONTEXT}" | jq .event.pull_request._links.commits.href -r)
-
-        if [[ "${COMMITS_API}" != "null" ]]; then
-          echo "Commits API : ${COMMITS_API}"
-        else
-          echo "::error:Could not find commits api url from context"
-          exit 1
-        fi
-
-        COMMITS=$(curl --request GET \
-          --header 'authorization: Bearer ${{ env.GITHUB_TOKEN }}' \
-          --header 'content-type: application/json' \
-          --fail \
-          ${COMMITS_API} | jq)
-
-        for commit in $(echo "${COMMITS}" | jq -r '.[] | @base64'); do
-          _jq() {
-            echo "${commit}" | base64 --decode | jq -r ${1}
-          }
-
-          echo "Commit message is: $(_jq '.commit.message')"
-
-        done
+      run: ${{ github.action_path }}/action.bash
       env:
         GITHUB_CONTEXT: ${{ toJSON(github) }}
         GITHUB_TOKEN: ${{ github.token }}
