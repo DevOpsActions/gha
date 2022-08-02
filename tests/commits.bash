@@ -40,7 +40,6 @@ for commit in $(echo "${COMMITS}" | jq -r '.[] | @base64'); do
         echo "${commit}" | base64 --decode | jq -r ${1}
     }
 
-    echo ${commit} | base64 --decode | jq
     author=$(_jq '.commit.author.name')
     message=$(_jq '.commit.message')
     sha_long=$(_jq '.sha')
@@ -55,7 +54,7 @@ for commit in $(echo "${COMMITS}" | jq -r '.[] | @base64'); do
         ((errors=errors+1))
     fi
 
-    echo -e "${Cyan}${sha_short}${Color_Off}\t${Green}${author}${Color_Off}\t${Yellow}${message}\t   ${check_result}${Color_Off}" >> ${TMP_LOGS}
+    echo -e "${Cyan}${sha_short}${Color_Off}\t${Green}${author}${Color_Off}\t${Yellow}${message}\t  ${check_result}${Color_Off}" >> ${TMP_LOGS}
 done
 
 cat ${TMP_LOGS} | column -ts $'\t' && \

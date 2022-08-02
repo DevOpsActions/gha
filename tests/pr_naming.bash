@@ -24,7 +24,7 @@ elif [[ "${check_result}" == "🔴" ]]; then
     ((errors=errors+1))
 fi
 
-echo -e "${Green}${AUTHOR}${Color_Off}\t${Yellow}${PR_TITLE}${Color_Off}\t${check_result}" >> ${TMP_LOGS}
+echo -e "${Green}${AUTHOR}${Color_Off}\t${Yellow}${PR_TITLE}${Color_Off}\t  ${check_result}" >> ${TMP_LOGS}
 
 cat ${TMP_LOGS} | column -ts $'\t' && \
 rm ${TMP_LOGS}
