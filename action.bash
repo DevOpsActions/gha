@@ -74,6 +74,6 @@ echo -e "  🔴 ${Red}${errors} Invalid commit(s)${Color_Off}"
 echo
 
 if [ "${errors}" -gt 0 ]; then
-    echo "::error::At least one commit is not respecting commit convention."
+    echo "::error::ERROR: ${errors} commits are not respecting commit convention"
     exit 1
 fi
