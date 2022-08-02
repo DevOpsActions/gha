@@ -15,13 +15,20 @@ runs:
           exit 1
         fi
 
-        curl --request GET \
+        COMMITS=$(curl --request GET \
           --header 'authorization: Bearer ${{ env.GITHUB_TOKEN }}' \
           --header 'content-type: application/json' \
           --fail \
-          ${COMMITS_API} | jq
+          ${COMMITS_API} | jq)
 
-        #gh pr -R octocat/Hello-World view 2279 --json commits
+        for commit in $(echo "${COMMITS}" | jq -r '.[] | @base64'); do
+          _jq() {
+            echo "${commit}" | base64 --decode | jq -r ${1}
+          }
+
+          echo "Commit message is: $(_jq '.message')"
+
+        done
       env:
         GITHUB_CONTEXT: ${{ toJSON(github) }}
         GITHUB_TOKEN: ${{ github.token }}
