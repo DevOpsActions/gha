@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# Import colors
+. ./colors.bash
+
 # Extracting Commits API URL from current context
 COMMITS_API_URL=$(echo "${GITHUB_CONTEXT:?}" | jq .event.pull_request._links.commits.href -r)
 
@@ -17,12 +20,10 @@ COMMITS=$(curl --request GET                           \
     --fail                                             \
     ${COMMITS_API_URL} | jq)
 
-echo "${COMMITS}"
-
 # Count them
 COMMITS_NB=$(echo "${COMMITS}" | jq '. | length')
 
-echo "Found ${COMMITS_NB} Commits to check ..."
+echo "${Yellow}Found ${Cyan}${COMMITS_NB}${Yellow} Commits to check ...${Color_Off}"
 
 # Iterate over each Commit
 for commit in $(echo "${COMMITS}" | jq -r '.[] | @base64'); do
