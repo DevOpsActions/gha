@@ -32,7 +32,7 @@ ignored=0
 valid=0
 
 # Table Header
-echo -e "${UCyan}SHA${Color_Off}\t${UPurple}Verdict${Color_Off}\t${UGreen}Author${Color_Off}\t${UYellow}Message${Color_Off}" >> ${TMP_LOGS}
+echo -e "${UCyan}SHA${Color_Off}\t${UGreen}Author${Color_Off}\t${UYellow}Message${Color_Off}\t${UPurple}Verdict${Color_Off}" >> ${TMP_LOGS}
 
 # Iterate over each Commit
 for commit in $(echo "${COMMITS}" | jq -r '.[] | @base64'); do
@@ -54,7 +54,7 @@ for commit in $(echo "${COMMITS}" | jq -r '.[] | @base64'); do
         ((errors=errors+1))
     fi
 
-    echo -e "${Cyan}${sha_short}${Color_Off}\t${check_result}\t${Green}${author}${Color_Off}\t${Yellow}${message}${Color_Off}" >> ${TMP_LOGS}
+    echo -e "${Cyan}${sha_short}${Color_Off}\t${Green}${author}${Color_Off}\t${Yellow}${message}\t${check_result}${Color_Off}" >> ${TMP_LOGS}
 done
 
 cat ${TMP_LOGS} | column -ts $'\t' && \
