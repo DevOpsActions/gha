@@ -30,7 +30,7 @@ COMMITS=$(curl --request GET                           \
 # Count them
 COMMITS_NB=$(echo "${COMMITS}" | jq '. | length')
 
-echo -e "${Blue}Found ${Yellow}${COMMITS_NB}${Blue} commit(s) to check ...${Color_Off}"
+echo -e "${IBlue}Found ${UYellow}${COMMITS_NB}${IBlue} commit(s) to check ...${Color_Off}"
 
 i=0
 # Iterate over each Commit
