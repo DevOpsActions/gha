@@ -47,6 +47,4 @@ for commit in $(echo "${COMMITS}" | jq -r '.[] | @base64'); do
     message=$(_jq '.commit.message')
 
     echo -e "${Cyan}#${i} | ${Yellow}${message}${Color_Off}"
-
-    if 
 done
