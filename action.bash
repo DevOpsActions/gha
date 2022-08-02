@@ -28,8 +28,12 @@ COMMITS=$(curl --request GET                           \
 COMMITS_NB=$(echo "${COMMITS}" | jq '. | length')
 
 echo -e "${IBlue}Found ${UYellow}${COMMITS_NB}${IBlue} commit(s) to check ...${Color_Off}"
+echo
+echo -e "🟢 ${Green}Valid${Color_Off} | 🟠 ${Yellow}Ignored${Color_Off} | 🔴 ${Red}Invalid${Color_Off}"
+echo
 
-i=0
+ERROR='false'
+
 # Iterate over each Commit
 for commit in $(echo "${COMMITS}" | jq -r '.[] | @base64'); do
     _jq() {
@@ -44,8 +48,18 @@ for commit in $(echo "${COMMITS}" | jq -r '.[] | @base64'); do
     message=$(_jq '.commit.message')
     sha_long=$(_jq '.parents[0].sha')
     sha_short=${sha_long:0:7}
-
     check_result=$(check_conventions "${author}" "${message}")
+
+    if [[ "${check_result}" != "🟢" ]]; then
+        ERROR='true'
+    fi
 
     echo -e " » ${Cyan}${sha_short}${Color_Off} | ${check_result} | ${Green}${author}${Color_Off} | ${Yellow}${message}${Color_Off}"
 done
+
+if [[ "${ERROR}" == "true" ]]; then
+    echo "::error::At least one commit is not respecting commit convention."
+    exit 1
+else
+    echo "All commits are"
+fi
