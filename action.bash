@@ -64,12 +64,13 @@ for commit in $(echo "${COMMITS}" | jq -r '.[] | @base64'); do
     echo -e "${Cyan}${sha_short}${Color_Off}\t${check_result}\t${Green}${author}${Color_Off}\t${Yellow}${message}${Color_Off}" >> ${TMP_LOGS}
 done
 
-cat ${TMP_LOGS} | column -ts $'\t'
+cat ${TMP_LOGS} | column -ts $'\t' && \
+rm ${TMP_LOGS}
 
 echo
-echo -e "  🟢 ${Green}${valid} Valid commits${Color_Off}"
-echo -e "  🟠 ${Yellow}${ignored} Ignored commits${Color_Off}"
-echo -e "  🔴 ${Red}${errors} Invalid commits${Color_Off}" 
+echo -e "  🟢 ${Green}${valid} Valid commit(s)${Color_Off}"
+echo -e "  🟠 ${Yellow}${ignored} Ignored commit(s)${Color_Off}"
+echo -e "  🔴 ${Red}${errors} Invalid commit(s)${Color_Off}" 
 echo
 
 if [ "${errors}" -gt 0 ]; then
