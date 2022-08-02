@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 
 # Configuration zone
-#REGEX=^(Revert ")?(feat|fix|chore|docs|refactor|test|dependencies)((\(\w+( \w+)*\)))?\:.+ \([A-Z]{1,10}-[0-9]{1,5}\)"?$
+read -r -d '' REGEX <<'EOF'
+^(Revert ")?(feat|(hot)?fix|chore|docs|refactor|test|dependencies)((\(\w+( \w+)*\)))?\:.+( \([A-Z]{1,10}-[0-9]{1,5}\))?"?$
+EOF
 # - Do not edit below this point
 
 check_commit_conventions() {

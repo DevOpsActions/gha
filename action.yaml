@@ -5,12 +5,6 @@ runs:
   using: 'composite'
   steps:
     - shell: bash
-      env:
-        REGEX: |
-          ^(Revert ")?(feat|fix|chore|docs|refactor|test|dependencies)((\(\w+( \w+)*\)))?\:.+ \([A-Z]{1,10}-[0-9]{1,5}\)"?$
-      run: |
-        echo "${REGEX}"
-    - shell: bash
       run: ${{ github.action_path }}/action.bash pr_naming
       env:
         GITHUB_CONTEXT: ${{ toJSON(github) }}
