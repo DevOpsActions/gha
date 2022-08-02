@@ -13,8 +13,8 @@ fi
 
 # Get Commits list
 COMMITS=$(curl --request GET                           \
-    --header 'authorization: Bearer ${GITHUB_TOKEN:?}' \
-    --header 'content-type: application/json'          \
+    --header "authorization: Bearer ${GITHUB_TOKEN:?}" \
+    --header "content-type: application/json"          \
     --silent                                           \
     --fail                                             \
     ${COMMITS_API_URL} | jq)
