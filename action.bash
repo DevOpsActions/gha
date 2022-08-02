@@ -12,11 +12,11 @@ if [[ "${COMMITS_API_URL:?}" == "null" ]]; then
 fi
 
 # Get Commits list
-COMMITS=$(curl --request GET                                 \
-    --header 'authorization: Bearer ${{ env.GITHUB_TOKEN }}' \
-    --header 'content-type: application/json'                \
-    --silent                                                 \
-    --fail                                                   \
+COMMITS=$(curl --request GET                           \
+    --header 'authorization: Bearer ${GITHUB_TOKEN:?}' \
+    --header 'content-type: application/json'          \
+    --silent                                           \
+    --fail                                             \
     ${COMMITS_API_URL} | jq)
 
 echo "${COMMITS}"
