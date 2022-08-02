@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
 # Extracting Commits API URL from current context
-COMMITS_API_URL=$(echo "${GITHUB_CONTEXT}" | jq .event.pull_request._links.commits.href -r)
+COMMITS_API_URL=$(echo "${GITHUB_CONTEXT:?}" | jq .event.pull_request._links.commits.href -r)
 
 # Check if an error occured during Commits API URL extraction
-if [[ "${COMMITS_API_URL}" == "null" ]]; then
+if [[ "${COMMITS_API_URL:?}" == "null" ]]; then
     echo "::error:Could not determine GitHub Action Context ..."
     exit 1
 fi
