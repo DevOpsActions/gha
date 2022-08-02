@@ -17,6 +17,8 @@ COMMITS=$(curl --request GET                                 \
     --fail                                                   \
     ${COMMITS_API_URL})
 
+echo "${COMMITS}"
+
 # Count them
 COMMITS_NB=$(echo "${COMMITS}" | jq '. | length')
 
