@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+# Configuration zone
+REGEX='^(Revert ")?(feat|fix|chore|docs|refactor|test|dependencies)((\(\w+( \w+)*\)))?\:.+ \([A-Z]{1,10}-[0-9]{1,5}\)"?$'
+# - Do not edit below this point
+
+# Path of the gha on the filesystem
 GHA_PATH=$(echo "${GITHUB_CONTEXT:?}" | jq .action_path -r)
 
 # Import colors
@@ -25,7 +30,7 @@ COMMITS=$(curl --request GET                           \
 # Count them
 COMMITS_NB=$(echo "${COMMITS}" | jq '. | length')
 
-echo -e "${IYellow}Found ${BIYellow}${COMMITS_NB}${IYellow} Commits to check ...${Color_Off}"
+echo -e "${Blue}Found ${Yellow}${COMMITS_NB}${Blue} commit(s) to check ...${Color_Off}"
 
 i=0
 # Iterate over each Commit
@@ -34,7 +39,14 @@ for commit in $(echo "${COMMITS}" | jq -r '.[] | @base64'); do
         echo "${commit}" | base64 --decode | jq -r ${1}
     }
 
+    echo "${commit}"
+
     ((i=i+1))
 
-    echo -e "${BIYellow}[#${i}] ${Yellow}$(_jq '.commit.message')${Color_Off}"
+    author=$(_jq '.commit.author')
+    message=$(_jq '.commit.message')
+
+    echo -e "${Cyan}#${i} | ${Yellow}${message}${Color_Off}"
+
+    if 
 done
