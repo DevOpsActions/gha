@@ -12,7 +12,7 @@ ignored=0
 valid=0
 
 # Table Header
-echo -e "${UPurple}Verdict${Color_Off}\t${UGreen}Author${Color_Off}\t${UYellow}Title${Color_Off}" >> ${TMP_LOGS}
+echo -e "${UGreen}Author${Color_Off}\t${UYellow}Title${Color_Off}\t${UPurple}Verdict${Color_Off}" >> ${TMP_LOGS}
 
 check_result=$(check_pr_naming_conventions "${AUTHOR}" "${PR_TITLE}")
 
@@ -24,7 +24,7 @@ elif [[ "${check_result}" == "🔴" ]]; then
     ((errors=errors+1))
 fi
 
-echo -e "${check_result}\t${Green}${AUTHOR}${Color_Off}\t${Yellow}${PR_TITLE}${Color_Off}" >> ${TMP_LOGS}
+echo -e "${Green}${AUTHOR}${Color_Off}\t${Yellow}${PR_TITLE}${Color_Off}\t${check_result}" >> ${TMP_LOGS}
 
 cat ${TMP_LOGS} | column -ts $'\t' && \
 rm ${TMP_LOGS}
